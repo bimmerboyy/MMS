@@ -1,0 +1,162 @@
+<?php
+
+class ShopProduct
+{
+    public function __construct(
+        protected string $title = 'title',
+        protected string $name = 'FirstName',
+        protected string $surname = 'Surname',
+        protected float $price = 0.0
+    ) {}
+
+    public function getTitle(): string { return $this->title; }
+    public function getName(): string { return $this->name; }
+    public function getSurname(): string { return $this->surname; }
+    public function getPrice(): float { return $this->price; }
+    public function getProducer(): string { return $this->name . ' ' . $this->surname; }
+
+    // Basic method for printing product details, can be overridden in child classes
+    public function printDetails(): string {
+        return "Product: {$this->title}, Producer: {$this->getProducer()}, Price: {$this->price}";
+    }
+}
+
+// CdProduct class extending ShopProduct
+class CdProduct extends ShopProduct
+{
+    private int $playLength;
+
+    public function __construct(
+        string $title,
+        string $name,
+        string $surname,
+        float $price,
+        int $playLength
+    ) {
+        parent::__construct($title, $name, $surname, $price);
+        $this->playLength = $playLength;
+    }
+
+    public function getPlayLength(): int { return $this->playLength; }
+
+    public function printDetails(): string {
+        return parent::printDetails() . ", Play Length: {$this->playLength} minutes";
+    }
+}
+
+// BookProduct class extending ShopProduct
+class BookProduct extends ShopProduct
+{
+    private int $pageCount;
+
+    public function __construct(
+        string $title,
+        string $name,
+        string $surname,
+        float $price,
+        int $pageCount
+    ) {
+        parent::__construct($title, $name, $surname, $price);
+        $this->pageCount = $pageCount;
+    }
+
+    public function getPageCount(): int { return $this->pageCount; }
+
+    public function printDetails(): string {
+        return parent::printDetails() . ", Pages: {$this->pageCount}";
+    }
+}
+
+// XMLProductWriter class for writing products to XML
+class XMLProductWriter
+{
+    // Method to write multiple products to XML
+    public function writeProductsToXML(array $products, string $filePath): void
+    {
+        $doc = new DOMDocument('1.0', 'UTF-8');
+        $doc->formatOutput = true;
+
+        // Create the root element <products>
+        $root = $doc->createElement("products");
+
+        foreach ($products as $product) {
+            $productNode = $doc->createElement("product");
+
+            $title = $doc->createElement("title", $product->getTitle());
+            $productNode->appendChild($title);
+
+            $producer = $doc->createElement("producer", $product->getProducer());
+            $productNode->appendChild($producer);
+
+            $price = $doc->createElement("price", number_format($product->getPrice(), 2));
+            $productNode->appendChild($price);
+
+            // Check if product is a CD or Book
+            if ($product instanceof CdProduct) {
+                $playLength = $doc->createElement("playLength", $product->getPlayLength());
+                $productNode->appendChild($playLength);
+            } elseif ($product instanceof BookProduct) {
+                $pageCount = $doc->createElement("pageCount", $product->getPageCount());
+                $productNode->appendChild($pageCount);
+            }
+
+            $root->appendChild($productNode);
+        }
+
+        // Append the root to the document
+        $doc->appendChild($root);
+
+        // Save the XML to a file
+        $doc->save($filePath);
+        echo "Product XML written to $filePath\n";
+    }
+
+    // Method to read products from XML and print them
+    public function readProductsFromXML(string $filePath): void
+    {
+        $xml = simplexml_load_file($filePath);
+       
+        foreach ($xml->product as $product) {
+            echo "Product: " . $product->title . "\n";
+            echo "Producer: " . $product->producer . "\n";
+            echo "Price: " . $product->price . "\n";
+           
+            if (isset($product->playLength)) {
+                echo "Play Length: " . $product->playLength . " minutes\n";
+            } elseif (isset($product->pageCount)) {
+                echo "Pages: " . $product->pageCount . "\n";
+            }
+           
+            echo "---------------------------------\n";
+        }
+    }
+}
+
+// Example usage
+$products = [
+    new CdProduct("Greatest Hits", "John", "Doe", 10.99, 60),
+    new CdProduct("Classical Masterpieces", "Jane", "Smith", 14.99, 75),
+    new CdProduct("Rock Legends", "Jim", "Beam", 12.99, 80),
+    new CdProduct("Jazz Essentials", "Ella", "Fitz", 9.99, 65),
+    new CdProduct("Pop Superstars", "Kate", "Perry", 11.99, 55),
+
+    new BookProduct("Learn PHP", "Tom", "Jones", 19.99, 300),
+    new BookProduct("Mastering OOP", "Alice", "Wonder", 29.99, 450),
+    new BookProduct("Design Patterns", "Bob", "Marley", 25.99, 350),
+    new BookProduct("Web Development 101", "Charlie", "Brown", 22.99, 400),
+    new BookProduct("Advanced JavaScript", "Dave", "Grohl", 27.99, 500)
+];
+
+// Create an instance of the XML writer
+/*$xmlWriter = new XMLProductWriter();
+$xmlFilePath = "products.xml";
+
+// Write the products to XML
+$xmlWriter->writeProductsToXML($products, $xmlFilePath);
+
+// Read and print the products from XML
+echo "\n--- Products from XML ---\n";
+$xmlWriter->readProductsFromXML($xmlFilePath);*/
+
+?>
+ 

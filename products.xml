@@ -1,0 +1,85 @@
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<products>
+  <product>
+    <title>Thriller</title>
+    <producer>
+      <name>Michael</name>
+      <surname>Jackson</surname>
+    </producer>
+    <price>12.99</price>
+  </product>
+  <product>
+    <title>Back in Black</title>
+    <producer>
+      <name>AC/DC</name>
+      <surname/>
+    </producer>
+    <price>10.99</price>
+  </product>
+  <product>
+    <title>The Dark Side of the Moon</title>
+    <producer>
+      <name>Pink</name>
+      <surname>Floyd</surname>
+    </producer>
+    <price>15.50</price>
+  </product>
+  <product>
+    <title>Rumours</title>
+    <producer>
+      <name>Fleetwood</name>
+      <surname>Mac</surname>
+    </producer>
+    <price>9.99</price>
+  </product>
+  <product>
+    <title>Abbey Road</title>
+    <producer>
+      <name>The</name>
+      <surname>Beatles</surname>
+    </producer>
+    <price>14.99</price>
+  </product>
+  <product>
+    <title>1984</title>
+    <producer>
+      <name>George</name>
+      <surname>Orwell</surname>
+    </producer>
+    <price>7.99</price>
+  </product>
+  <product>
+    <title>To Kill a Mockingbird</title>
+    <producer>
+      <name>Harper</name>
+      <surname>Lee</surname>
+    </producer>
+    <price>8.49</price>
+  </product>
+  <product>
+    <title>The Great Gatsby</title>
+    <producer>
+      <name>F. Scott</name>
+      <surname>Fitzgerald</surname>
+    </producer>
+    <price>10.99</price>
+  </product>
+  <product>
+    <title>Moby Dick</title>
+    <producer>
+      <name>Herman</name>
+      <surname>Melville</surname>
+    </producer>
+    <price>11.50</price>
+  </product>
+  <product>
+    <title>Pride and Prejudice</title>
+    <producer>
+      <name>Jane</name>
+      <surname>Austen</surname>
+    </producer>
+    <price>6.99</price>
+  </product>
+</products>
